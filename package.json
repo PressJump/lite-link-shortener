@@ -1,0 +1,16 @@
+{
+  "name": "lite-link-shortener",
+  "version": "1.0.0",
+  "description": "A lite link shortener that is able to generate short links with its own qr code made with Express and TailwindCSS made for fun.",
+  "main": "app.js",
+  "repository": "https://github.com/PressJump/lite-link-shortener.git",
+  "author": "PressJump <40802367+PressJump@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  }
+}

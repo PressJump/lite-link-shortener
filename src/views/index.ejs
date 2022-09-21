@@ -15,7 +15,9 @@
         
                 <div class="relative inline-block p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl sm:max-w-sm rounded-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:p-6">
                     <div class="flex items-center justify-center mx-auto">
-                        <img class="h-full rounded-lg" src="img/qrplaceholder.png" alt="" />
+                        <!-- dataurl image from data['qr'] AlpineJS -->
+                        <img :src="data['qr']" alt="QR Code">
+
                     </div>
     
                     <div class="mt-5 text-center">

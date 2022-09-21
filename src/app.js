@@ -53,6 +53,10 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: true }
 }));
+
+//qrcode
+const QRCode = require('qrcode');
+
 //#endregion
 
 //#region Routes
@@ -66,11 +70,10 @@ app.get('/', function (req, res) {
 app.post('/newlink', function (req, res) {
     //get link
     let link = req.body.link;
-
+    let crypt;
     if(!link)return;
     //check if database has link
     connection.query('SELECT * FROM links WHERE link = ?', [link], function (error, results, fields) {
-        let crypt;
         if (error) throw error;
         //if link does not exist
         if (results.length == 0) {
@@ -78,7 +81,7 @@ app.post('/newlink', function (req, res) {
                 crypt = '';
                 let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_|}{[]\:;?></-=';
                 let charactersLength = characters.length;
-                for (let i = 0; i < 4; i++) {
+                for (let i = 0; i < 6; i++) {
                     crypt += characters.charAt(Math.floor(Math.random() * charactersLength));
                 }
                 connection.query('SELECT * FROM links WHERE shortlink = ?', [crypt], function (error, results, fields) {
@@ -93,8 +96,13 @@ app.post('/newlink', function (req, res) {
             //get link's shortlink
             crypt = results[0].shortlink;
         }
-        //return json with link and shortlink
-        res.json({ link: link, shortlink: crypt });
+        shortlink = (`${config.website.domain}/${crypt}`);
+        //qr code
+        QRCode.toDataURL(shortlink, function (err, qr) {
+            //render newlink
+            
+            res.json({ link: link, shortlink: shortlink, qr: qr });
+        });
     });
 });
 //#endregion

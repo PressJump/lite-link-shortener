@@ -1,0 +1,36 @@
+<div class="py-96">
+    <div class="fixed inset-0 z-10 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    
+            <div class=" inline-block p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl sm:max-w-sm rounded-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:p-6">
+                <div class="flex items-center justify-center mx-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                    </svg>  
+                </div>
+
+                <div class="mt-5 text-center">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white" id="modal-title">
+                        Redirecting you soon
+                    </h3>
+
+                    <p class="mt-2 text-gray-500 dark:text-gray-400">
+                        You will be redirected to the original link in a few seconds, if not click the button below.
+                    </p>
+                </div>
+
+                <div class="mt-4 sm:flex sm:items-center sm:justify-between sm:mt-6 sm:-mx-2">
+                    <button onclick="window.location.href = 'https://<%= url %>'" class="px-4 sm:mx-2 w-full py-2.5 mt-3 sm:mt-0 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40">
+                        Go to link
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    setTimeout(function() {
+        window.location.href = "https://<%= url %>";
+    }, 2000);
+</script>

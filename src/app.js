@@ -107,6 +107,25 @@ app.post('/newlink', function (req, res) {
 });
 //#endregion
 
+
+//link
+app.get('/:link', function (req, res) {
+    //get link
+    let link = req.params.link;
+    //check if database has link
+    connection.query('SELECT * FROM links WHERE shortlink = ?', [link], function (error, results, fields) {
+        if (error) throw error;
+        //if link does not exist
+        if (results.length == 0) {
+            //send 404
+            res.status(404).send('404 Not Found');
+        } else {
+            //render redirect
+            res.render("redirect", { info: config.website, title: 'Redirecting', url: results[0].link });
+        }
+    });
+});
+
 //listen
 app.listen(config.server.port, function () {
     console.log('Listening on port ' + config.server.port);

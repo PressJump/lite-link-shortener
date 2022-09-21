@@ -7,8 +7,12 @@
         "password": "",
         "database": "shortener"
     },
-    "session"
+    "session":
     {
         "secret": "secret"
+    },
+    "server":
+    {
+        "port": 3000
     }
 }

@@ -33,6 +33,9 @@ connection.connect(function (err) {
 const expressLayouts = require('express-ejs-layouts');
 app.use(expressLayouts);
 
+//default layout
+app.set('layout', 'layouts/default');
+
 //express-session
 const session = require('express-session');
 app.use(session({
@@ -42,3 +45,8 @@ app.use(session({
     cookie: { secure: true }
 }));
 //#endregion
+
+//listen
+app.listen(config.server.port, function () {
+    console.log('Listening on port ' + config.server.port);
+});

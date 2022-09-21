@@ -1,1 +1,104 @@
-sdfsdfsdfsdfsdf
+<section class="bg-white dark:bg-gray-900" x-data="makenewlink()">
+    <div class="relative flex justify-center">
+        <div id="results" x-show="isOpen"
+            x-transition:enter="transition duration-300 ease-out"
+            x-transition:enter-start="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
+            x-transition:enter-end="translate-y-0 opacity-100 sm:scale-100"
+            x-transition:leave="transition duration-150 ease-in"
+            x-transition:leave-start="translate-y-0 opacity-100 sm:scale-100"
+            x-transition:leave-end="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
+            class="fixed inset-0 z-10 overflow-y-auto" 
+            aria-labelledby="modal-title" role="dialog" aria-modal="true"
+        >
+            <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        
+                <div class="relative inline-block p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl sm:max-w-sm rounded-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:p-6">
+                    <div class="flex items-center justify-center mx-auto">
+                        <img class="h-full rounded-lg" src="img/qrplaceholder.png" alt="" />
+                    </div>
+    
+                    <div class="mt-5 text-center">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white" id="modal-title">
+                            Link & QR Code Generated
+                        </h3>
+    
+                        <p class="mt-2 text-gray-500 dark:text-gray-400">
+                            Short link generated. Anyone with the link
+                            can now easily access the long link with the short link below.
+                        </p>
+                    </div>
+    
+                    <div class="flex items-center justify-between w-full mt-5 gap-x-2">
+                        <input type="text" x-model="data['shortlink']" class="flex-1 block h-10 px-4 text-sm text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" readonly />
+                        
+                        <button class="rounded-md hidden sm:block p-1.5 text-gray-700 bg-white border border-gray-200 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring transition-colors duration-300 hover:text-blue-500 dark:hover:text-blue-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                        </button>
+                    </div>
+    
+                    <div class="mt-4 sm:flex sm:items-center sm:justify-between sm:mt-6 sm:-mx-2">
+                        <button class="px-4 sm:mx-2 w-full py-2.5 mt-3 sm:mt-0 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40" @click="isOpen = false">
+                            Thank you!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container px-6 py-16 mx-auto text-center">
+        <div class="max-w-lg mx-auto">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white md:text-4xl">Shorten Any Link</h1>
+
+            <p class="mt-6 text-gray-500 dark:text-gray-300">
+                Shorten a link in seconds making a long link easily acessable to anyone with the short link or the qr code.
+            </p>
+
+            <div class="w-full max-w-sm mx-auto mt-6 h-12 bg-transparent border rounded-md dark:border-gray-700 focus-within:border-blue-400 focus-within:ring focus-within:ring-blue-300 dark:focus-within:border-blue-300 focus-within:ring-opacity-40">
+                <form class="flex flex-col md:flex-row">
+                    <input x-model="link" id="link" name="link" placeholder="Link to be shortened here..." class="flex-1 h-10 px-4 py-2 m-1 text-gray-700 placeholder-gray-400 bg-transparent border-none appearance-none dark:text-gray-200 focus:outline-none focus:placeholder-transparent focus:ring-0" />
+
+                    <button x-on:click.prevent="shortenURL()" type="button" class="h-9 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400">
+                        Shorten
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function makenewlink() {
+    return {
+        error: "",
+        data: {},
+        link: "",
+        isOpen: Boolean,
+        shortenURL: async function () {
+            try {
+                const result = await fetch(`/newlink`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ link: this.link}),
+                });
+
+                const resJson = await result.json();
+                if (result.ok) {
+                    console.log(resJson);
+                    this.data = resJson;
+                    this.isOpen = true;
+                }
+
+            } catch (error) {
+                console.log(error);
+                this.error = error;
+            }
+    },
+    };
+}
+</script>

@@ -62,8 +62,8 @@ const QRCode = require('qrcode');
 //#region Routes
 //home
 app.get('/', function (req, res) {
-    //render index
-    res.render('index');
+    //render indexs
+    res.render('index', { info: config.website, title: 'Home'});
 });
 
 //post newlink

@@ -6,6 +6,8 @@ const app = express();
 //ejs
 const ejs = require('ejs');
 app.set('view engine', 'ejs');
+//views in base directory
+app.set('views', __dirname + '/views');
 
 //body-parser
 const bodyParser = require('body-parser');
@@ -38,7 +40,7 @@ const expressLayouts = require('express-ejs-layouts');
 app.use(expressLayouts);
 
 //default layout
-app.set('layout', 'layouts/default');
+app.set('layout', './layouts/default');
 
 //express-session
 const session = require('express-session');
@@ -48,6 +50,14 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: true }
 }));
+//#endregion
+
+//#region Routes
+//home
+app.get('/', function (req, res) {
+    //render index
+    res.render('index');
+});
 //#endregion
 
 //listen

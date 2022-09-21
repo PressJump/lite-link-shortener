@@ -61,6 +61,42 @@ app.get('/', function (req, res) {
     //render index
     res.render('index');
 });
+
+//post newlink
+app.post('/newlink', function (req, res) {
+    //get link
+    let link = req.body.link;
+    //check if database has link
+    connection.query('SELECT * FROM links WHERE link = ?', [link], function (error, results, fields) {
+        let crypt;
+        let link;
+        if (error) throw error;
+        //if link does not exist
+        if (results.length == 0) {
+            //generate random crypt string that has letters, numbers, and special characters, random case and length of 4 that is not already in the database
+            do {
+                crypt = '';
+                let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+~`|}{[]\:;?><,./-=';
+                let charactersLength = characters.length;
+                for (let i = 0; i < 4; i++) {
+                    crypt += characters.charAt(Math.floor(Math.random() * charactersLength));
+                }
+                connection.query('SELECT * FROM links WHERE shortlink = ?', [crypt], function (error, results, fields) {
+                    if (error) throw error;
+                });
+            } while (results.length != 0);
+            //insert link and crypt into database
+            connection.query('INSERT INTO links (link, shortline) VALUES (?, ?)', [link, crypt], function (error, results, fields) {
+                if (error) throw error;
+            });
+        }else{
+            //get link's shortlink
+            shortlink = results[0].shortlink;
+        }
+        //return json with link and shortlink
+        res.json({ link: link, shortlink: shortlink });
+    });
+});
 //#endregion
 
 //listen

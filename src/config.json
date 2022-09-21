@@ -6,5 +6,9 @@
         "user": "root",
         "password": "",
         "database": "shortener"
+    },
+    "session"
+    {
+        "secret": "secret"
     }
 }

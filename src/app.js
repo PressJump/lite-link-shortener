@@ -9,6 +9,9 @@ app.set('view engine', 'ejs');
 //views in base directory
 app.set('views', __dirname + '/views');
 
+//serve static
+app.use(express.static(__dirname + '/static'));
+
 //body-parser
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));

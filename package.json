@@ -19,6 +19,6 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "build": "tailwindcss build src/static/css/style.css -o src/static/css/main.css"
+    "build": "tailwindcss build -i src/static/css/style.css -o src/static/css/main.css --watch"
   }
 }

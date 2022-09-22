@@ -1,19 +1,19 @@
 {
     "website": {
-        "brand": "Yeet"
+        "brand": "Link Shortener"
     },
     "database": {
-        "host": "localhost",
+        "host": "",
         "port": 3306,
-        "user": "root",
+        "user": "",
         "password": "",
-        "database": "shortener"
+        "database": ""
     },
     "session": {
         "secret": "secret"
     },
     "server": {
         "port": 3000,
-        "installed": true
+        "installed": false
     }
 }

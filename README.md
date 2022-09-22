@@ -1,6 +1,12 @@
 <div align="center">
+ 
+ 
+ 
 # Lite-Link-Shortener
 A lite link shortener service that is able to generate short links with its own qr code. Made with Express, TailwindCSS and MerakiUI for fun. 
+ 
+ 
+ 
 </div>
 
 ## 📸 Photos

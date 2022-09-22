@@ -21,22 +21,24 @@ app.use(bodyParser.json());
 const config = require('./config.json');
 
 //mysql
+let connection;
 const mysql = require('mysql');
-const connection = mysql.createConnection({
-    host: config.database.host,
-    user: config.database.user,
-    password: config.database.password,
-    database: config.database.database
-});
+if (config.server.installed) {
+    connection = mysql.createConnection({
+        host: config.database.host,
+        user: config.database.user,
+        password: config.database.password,
+        database: config.database.database
+    });
 
-//when connection is established
-connection.connect(function (err) {
-    if (err) {
-        console.error('error connecting: ' + err.stack);
-        return;
-    }
-    console.log('connected as id ' + connection.threadId);
-});
+    //when connection is established
+    connection.connect(function (err) {
+        if (err) {
+            console.error('error connecting: ' + err.stack);
+            return;
+        }
+    });
+}
 
 //express-ejs-layouts (We could utilize react and a framework which would make this easier to manage but I wanted to keep it simple)
 const expressLayouts = require('express-ejs-layouts');
@@ -57,9 +59,81 @@ app.use(session({
 //qrcode
 const QRCode = require('qrcode');
 
+const fs = require('fs');
+
 //#endregion
 
 //#region Routes
+
+if (!config.server.installed){
+    //lead everything to install
+    app.get('*', function (req, res) {
+        //render install
+        res.render('install', {info: config.website, title: 'Install', message: ''});
+    });
+
+    //post install
+    app.post('*', function (req, res) {
+        let brand = req.body.brand;
+        let domain = req.body.domain;
+        let host = req.body.host;
+        let user = req.body.username;
+        let password = req.body.password;
+        let database = req.body.database;
+        let port = req.body.port;
+
+        //update config
+        config.server.installed = true;
+        config.website.brand = brand;
+        config.website.domain = domain;
+        config.database.host = host;
+        config.database.user = user;
+        config.database.password = password;
+        config.database.database = database;
+
+        //connect to database and check if it connects
+        connection = mysql.createConnection({
+            host: config.database.host,
+            user: config.database.user,
+            password: config.database.password,
+            database: config.database.database
+        });
+
+        //when connection is established
+        connection.connect(function (err) {
+            if (err) {
+                //redirect to install with message
+                res.render('install', {info: config.website, title: 'Install', message: 'Could not connect to database. Please check your credentials and try again.'});
+                return;
+            }
+        });
+
+        //inject sql file
+        const sql = fs.readFileSync(__dirname+'/'+'links.sql').toString();
+        //run sql
+        connection.query(sql, function (err, result) {
+            if (err) {
+                //redirect to install with message
+                res.render('install', {info: config.website, title: 'Install', message: 'Could not create database. Error: ' + err});
+                return;
+            }
+        });
+
+        //write config with proper spacing
+        fs.writeFile(__dirname + '/config.json', JSON.stringify(config, null, 4), function (err) {
+            if (err) {
+                //redirect to install with message
+                res.render('install', {info: config.website, title: 'Install', message: 'Could not write config file. Error: ' + err});
+                return;
+            }
+        });
+
+        //redirect to home
+        res.redirect('/');
+    });
+
+}
+
 //home
 app.get('/', function (req, res) {
     //render indexs

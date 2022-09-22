@@ -1,23 +1,19 @@
 {
-    "website":
-    {
-        "brand": "Link Shortener",
-        "domain": "http://localhost:3000"
+    "website": {
+        "brand": "Yeet"
     },
-    "database":
-    {
+    "database": {
         "host": "localhost",
         "port": 3306,
         "user": "root",
         "password": "",
         "database": "shortener"
     },
-    "session":
-    {
+    "session": {
         "secret": "secret"
     },
-    "server":
-    {
-        "port": 3000
+    "server": {
+        "port": 3000,
+        "installed": true
     }
 }

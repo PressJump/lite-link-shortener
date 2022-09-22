@@ -113,6 +113,12 @@ app.get('/privacypolicy', function (req, res) {
     res.render('privacypolicy', { info: config.website, title: 'Privacy Policy' });
 });
 
+//faq
+app.get('/faq', function (req, res) {
+    //render faq
+    res.render('faq', { info: config.website, title: 'FAQ' });
+});
+
 //link
 app.get('/:link', function (req, res) {
     //get link

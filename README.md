@@ -11,11 +11,12 @@ A lite link shortener service that is able to generate short links with its own 
 
 ## 📸 Photos
 Some preview images of the link shortening service.
-![enter image description here](https://raw.githubusercontent.com/PressJump/lite-link-shortener/e1bdefe8997496817dec2dfb79c39562d6f7432d/src/static/img/preview1.PNG?token=AJXJQP4ENNVVBKPSJOV3UD3DFPVAO)
-![enter image description here](https://raw.githubusercontent.com/PressJump/lite-link-shortener/e1bdefe8997496817dec2dfb79c39562d6f7432d/src/static/img/preview2.PNG?token=AJXJQPYW2WNE4XOR3Y3SMLLDFPVAO)
+![Preview1](https://github.com/PressJump/lite-link-shortener/blob/main/src/static/img/preview1.PNG)
+<img src="https://raw.githubusercontent.com/pulse-browser/assets/main/preview.png">
+![Preview2](https://github.com/PressJump/lite-link-shortener/blob/main/src/static/img/preview2.PNG)
 
 ### Install
-After installing or cloning a copy of lite-link-shortener install the dependencies with your package manager of choice. `npm i` `
+After installing or cloning a copy of lite-link-shortener install the dependencies with your package manager of choice. `npm i`
 
 From here, have a SQL database setup with a database ready with any name and start the server using the `start` command. `npm start`
 

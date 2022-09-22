@@ -12,7 +12,6 @@ A lite link shortener service that is able to generate short links with its own 
 ## 📸 Photos
 Some preview images of the link shortening service.
 ![Preview1](https://github.com/PressJump/lite-link-shortener/blob/main/src/static/img/preview1.PNG)
-<img src="https://raw.githubusercontent.com/pulse-browser/assets/main/preview.png">
 ![Preview2](https://github.com/PressJump/lite-link-shortener/blob/main/src/static/img/preview2.PNG)
 
 ### Install

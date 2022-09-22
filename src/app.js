@@ -107,6 +107,11 @@ app.post('/newlink', function (req, res) {
 });
 //#endregion
 
+//privacypolicy
+app.get('/privacypolicy', function (req, res) {
+    //render privacypolicy
+    res.render('privacypolicy', { info: config.website, title: 'Privacy Policy' });
+});
 
 //link
 app.get('/:link', function (req, res) {
